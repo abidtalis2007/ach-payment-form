@@ -10,17 +10,19 @@ export async function POST(request: Request) {
   try {
     const data = await request.json();
     
+    console.log('Received data:', data);
+    
     const { error } = await supabase.from('ach_submissions').insert({
-      company_name: data.company_name,
-      contact_name: data.contact_name,
+      company_name: data.company_name || data.companyName || data.company,
+      contact_name: data.contact_name || data.contactName || data.name,
       email: data.email,
       phone: data.phone,
-      bank_name: data.bank_name,
-      account_holder_name: data.account_holder_name,
-      account_type: data.account_type,
-      routing_number: data.routing_number,
-      account_number: data.account_number,
-      signature_name: data.signature_name,
+      bank_name: data.bank_name || data.bankName || data.bank,
+      account_holder_name: data.account_holder_name || data.accountHolderName || data.accountName,
+      account_type: data.account_type || data.accountType,
+      routing_number: data.routing_number || data.routingNumber,
+      account_number: data.account_number || data.accountNumber,
+      signature_name: data.signature_name || data.signatureName || data.signature,
     });
 
     if (error) throw error;
